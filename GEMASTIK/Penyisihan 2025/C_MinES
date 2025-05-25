@@ -1,0 +1,79 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+//Shortcut
+#define fp(i, l, r)     for(i = l; i < r; i++)
+#define ms(x, y)        memset(x, y, sizeof(x))
+#define all(x)          x.begin(), x.end()
+#define sc              second
+#define fr              first
+#define el              '\n'
+
+using dd                = double;
+using ll                = long long;
+using ull               = unsigned long long;
+using pii               = pair<int, int>;
+using pll               = pair<ll, ll>;
+
+// Global variabel
+const int S = 1e5,
+minf = INT_MIN, 
+pinf = INT_MAX,
+mod = 1e9 + 7;
+
+// Fren -> Not, Equal, AND, OR
+// ASCII 0 = 48, A = 65, a = 97
+
+int main()
+{
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr); std::cout.tie(nullptr);
+    
+    vector<vector<string>> 
+    table1 {
+        {"AB", "DC", "CC", "CB"},
+        {"CA", "DA", "CD", "DD"}, 
+        {"BC", "AA", "BA", "DB"},
+        {"BD", "AD", "BB", "AC"}
+    },
+    table2 {
+        {"CD", "BB", "AC", "CC"},
+        {"CB", "DB", "AD", "DD"},
+        {"DA", "DC", "BC", "BD"},
+        {"AA", "BA", "CA", "AB"}
+    };
+    vector<char> key {'A', 'B', 'C', 'D'};
+
+    string in, temp;
+    cin >> in;
+    int i, j, k;
+    for(i = 1; i < in.length(); i += 2) {
+        temp = "";
+        temp += in[i - 1];
+        temp += in[i];
+        for(j = 0; j < 4; j++) {
+            for(k = 0; k < 4; k++) {
+                if(temp == table2[j][k]) {
+                    in[i - 1] = key[j];
+                    in[i]     = key[k];
+                }
+            }
+        }
+    }
+    // cout << in << el;
+    for(i = 1; i < in.length(); i += 2) {
+        temp = "";
+        temp += in[i - 1];
+        temp += in[i];
+        for(j = 0; j < 4; j++) {
+            for(k = 0; k < 4; k++) {
+                if(temp == table1[j][k]) {
+                    in[i - 1] = key[j];
+                    in[i]     = key[k];
+                }
+            }
+        }
+    }
+    cout << in << el;
+    return 0;
+}
