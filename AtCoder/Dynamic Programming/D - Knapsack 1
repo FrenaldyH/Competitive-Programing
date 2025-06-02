@@ -1,0 +1,47 @@
+/**
+ *    author:  FrenH
+ *    created: 03.06.2025 00:42:52
+ *    problem: https://atcoder.jp/contests/dp/tasks/dp_d
+**/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+//Shortcut
+#define fp(i, l, r)     for(i = l; i < r; i++)
+#define ms(x, y)        memset(x, y, sizeof(x))
+#define all(x)          x.begin(), x.end()
+#define sc              second
+#define fr              first
+#define el              '\n'
+
+using dd                = double;
+using ll                = long long;
+using ull               = unsigned long long;
+using pii               = pair<int, int>;
+using pll               = pair<ll, ll>;
+
+// Global variabel
+const int S = 1e5,
+minf = INT_MIN, 
+pinf = INT_MAX,
+mod = 1e9 + 7;
+
+// Fren -> Not, Equal, AND, OR
+// ASCII 0 = 48, A = 65, a = 97
+
+int main()
+{
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr); std::cout.tie(nullptr);
+    
+    int N, W, i, j;
+    cin >> N >> W;
+    vector<ll> w(N), v(N), dp(W + 1, 0);
+    fp(i, 0, N) cin >> w[i] >> v[i];
+    fp(i, 0, N) 
+        for(j = W; j >= max(0LL, w[i]); j--) 
+            dp[j] = max(dp[j], v[i] + dp[j - w[i]]);
+    cout << dp[W] << el;
+    return 0;
+}
