@@ -1,0 +1,71 @@
+/**
+ *    author:  FrenH
+ *    created: 03.06.2025 02:16:13
+ *    problem: https://atcoder.jp/contests/dp/tasks/dp_g
+**/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+//Shortcut
+#define fp(i, l, r)     for(i = l; i < r; i++)
+#define ms(x, y)        memset(x, y, sizeof(x))
+#define all(x)          x.begin(), x.end()
+#define sc              second
+#define fr              first
+#define el              '\n'
+
+using dd                = double;
+using ll                = long long;
+using ull               = unsigned long long;
+using pii               = pair<int, int>;
+using pll               = pair<ll, ll>;
+
+// Global variabel
+const int S = 1e5,
+minf = INT_MIN, 
+pinf = INT_MAX,
+mod = 1e9 + 7;
+
+// Fren -> Not, Equal, AND, OR
+// ASCII 0 = 48, A = 65, a = 97
+
+vector<int> dis;
+vector<bool> vis;
+vector<vector<int>> adj;
+void dfs(int node) {
+    vis[node] = true, dis[node] = 0;
+    for(int &child : adj[node]) {
+        if(!vis[child]) {
+            dis[child] = dis[node] + 1;
+            dfs(child);
+        }
+    }
+    for(int &child : adj[node]) {
+        dis[node] = max(dis[node], dis[child] + 1);
+    }
+}
+
+int main()
+{
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr); std::cout.tie(nullptr);
+    
+    int n, m, a, b, i, ans;
+    cin >> n >> m;
+
+    adj.resize(n + 1);
+    vis.resize(n + 1);
+    dis.resize(n + 1);
+    fp(i, 0, m) {
+        cin >> a >> b;
+        adj[a].push_back(b);
+    }
+    for(i = 1; i <= n; i++) 
+        if(!vis[i]) dfs(i);
+    ans = 0;
+    for(i = 1; i <= n; i++) 
+        ans = max(ans, dis[i]);
+    cout << ans << el;
+    return 0;
+}
