@@ -1,0 +1,69 @@
+/**
+ *    author:  FrenH
+ *    created: 21.07.2025 17:24:29
+**/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+//Shortcut
+#define fp(i, l, r)     for(i = l; i < r; i++)
+#define ms(x, y)        memset(x, y, sizeof(x))
+#define all(x)          x.begin(), x.end()
+#define sc              second
+#define fr              first
+#define el              '\n'
+
+using dd                = double;
+using ll                = long long;
+using ull               = unsigned long long;
+using pii               = pair<int, int>;
+using pll               = pair<ll, ll>;
+
+// Global variabel
+const ll S = 1e5,
+minf = LLONG_MIN, 
+pinf = LLONG_MAX,
+mod = 1e9 + 7;
+
+// Fren -> Not, Equal, AND, OR
+// ASCII 0 = 48, A = 65, a = 97
+
+int main()
+{
+		std::ios::sync_with_stdio(false);
+		std::cin.tie(nullptr); std::cout.tie(nullptr);
+		
+		int n, i, j, l, r; 
+		cin >> n;
+
+		ll dp[n + 1][n + 1], ans[n + 1][n + 1];
+		for(i = 1; i <= n; i++) {
+			for(j = 1; j <= n; j++) {
+				if(i == j) {
+					cin >> dp[i][j];
+					ans[i][j] = 0;
+				} else {
+					dp[i][j] = ans[i][j] = pinf;
+				}
+			}
+		}
+		
+		for(i = 2; i <= n; i++) {
+			for(r = i; r <= n; r++) {
+				l = r - i + 1;
+
+				for(j = l; j < r; j++) {
+					ll t1, t2;
+					t1 = dp[l][j] + dp[j + 1][r];
+					t2 = ans[l][j] + ans[j + 1][r] + t1;
+					if(ans[l][r] > t2) {
+						ans[l][r] = t2;
+						dp[l][r] = t1;
+					}
+				}
+			}
+		}
+		cout << ans[1][n] << el;
+		return 0;
+}
