@@ -1,0 +1,59 @@
+/**
+ *    author:  FrenH
+ *    created: 21.07.2025 21:36:59
+**/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+//Shortcut
+#define fp(i, l, r)     for(i = l; i < r; i++)
+#define ms(x, y)        memset(x, y, sizeof(x))
+#define all(x)          x.begin(), x.end()
+#define sc              second
+#define fr              first
+#define el              '\n'
+
+using dd                = double;
+using ll                = long long;
+using ull               = unsigned long long;
+using pii               = pair<int, int>;
+using pll               = pair<ll, ll>;
+
+// Global variabel
+const int S = 1e5,
+minf = INT_MIN, 
+pinf = INT_MAX,
+mod = 1e9 + 7;
+
+// Fren -> Not, Equal, AND, OR
+// ASCII 0 = 48, A = 65, a = 97
+
+int main()
+{
+		std::ios::sync_with_stdio(false);
+		std::cin.tie(nullptr); std::cout.tie(nullptr);
+		
+		int n, w, m, i, t;
+		cin >> n;
+
+		vector<vector<int>> mat(n, vector<int> (n));
+		vector<int> dp(1 << n);
+
+		for(m = 0; m < n; m++) 
+			for(w = 0; w < n; w++)
+				cin >> mat[m][w];	
+		
+		dp[0] = 1;
+		for(w = 0; w < (1 << n) - 1; w++) {
+			m = __builtin_popcount(w);
+			for(i = 0; i < n; i++) {
+				if(mat[m][i] & !(w & (1 << i))) {
+					t = (w | (1 << i));
+					dp[t] = (dp[t] + dp[w]) % mod;
+				}
+			}
+		}
+		cout << dp[(1 << n) - 1] << el;
+		return 0;
+}
